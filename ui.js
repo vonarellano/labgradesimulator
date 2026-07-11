@@ -85,7 +85,7 @@ function createExerciseRow(number) {
   row.className = "exercise-row";
 
   row.innerHTML = `
-    <label><i>Exercise ${number}:</i></label>
+    <label><i>Exer ${number}:</i></label>
 
     <input
       id="exer${number}"

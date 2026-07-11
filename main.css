@@ -88,6 +88,11 @@ button:hover {
   margin-right: 8px; /* Match the spacing after the checkbox */
 }
 
+#quizPercentError,
+#exerPercentError {
+  margin-left: 22px;
+}
+
 #footer {
   font-size: 12px;
 }

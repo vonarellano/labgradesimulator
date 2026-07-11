@@ -40,6 +40,11 @@ body {
     padding-left: 20px;
     padding-right: 20px;
   }
+
+  input[type="text"] {
+    width: 100%; /* Fills all available space */
+    box-sizing: border-box; /* Includes padding and borders in the width */
+  }
 }
 
 .error {

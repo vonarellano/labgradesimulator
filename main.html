@@ -1,0 +1,120 @@
+<!-- LAB GRADE SIMULATOR -->
+<!-- AUTHOR: Von Michael B. Arellano -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Lab Grade Simulator</title>
+    <script src="main.js"></script>
+    <script src="ui.js"></script>
+    <link rel="stylesheet" href="main.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+    />
+  </head>
+  <body>
+    <h2 id="title">Laboratory Grade Simulator</h2>
+    <p id="author">Lab Instructor: Von Arellano</p>
+    <div class="container">
+      <!-- Description -->
+      <p id="description">
+        This software simulates the computation of your laboratory grade. Please
+        note that the final laboratory grade may differ from the result shown.
+        For any questions or discrepancies, please consult your laboratory
+        instructor.
+      </p>
+      <!-- Lab Grade Distribution -->
+      <div id="exerLabel">
+        <br />
+        <label><b>Laboratory Grade Requirements</b></label
+        ><br />
+        <i>Please check all the requirements that applies.</i>
+      </div>
+      <br />
+      <label for="labPercent">Enter Lab Percentage (%): </label>
+      <input
+        id="labPercent"
+        type="number"
+        placeholder="50.0"
+        oninput="isNumber(this, 'labPercentError')"
+      />
+      <div id="labPercentError" class="error"></div>
+
+      <!-- Quizzes Checkbox-->
+      <div>
+        <label for="quizzes">
+          <input
+            type="checkbox"
+            id="quizzes"
+            onchange="hideOrUnhide(this, 'quiz')"
+          />
+          Quizzes as Exer
+        </label>
+      </div>
+
+      <!-- Project Checkbox-->
+      <div>
+        <label for="project">
+          <input type="checkbox" id="project" /> Project
+        </label>
+      </div>
+
+      <!-- Lab Exam Checkbox-->
+      <div>
+        <label for="exam"> <input type="checkbox" id="exam" /> Exam </label>
+      </div>
+
+      <div id="quiz" hidden="true">
+        <p><b>Laboratory Quiz</b></p>
+        <!-- Enter Quiz Score -->
+        <label>Enter Perfect Score:</label>
+        <input
+          type="number"
+          id="perfectQuizScore"
+          placeholder="10"
+          oninput="isNumber(this, 'perfectQuizScoreError')"
+        />
+        <div id="perfectQuizScoreError" class="error"></div>
+        <label>Enter Your Quiz Score:</label>
+        <input
+          type="number"
+          id="quizScore"
+          placeholder="10"
+          oninput="isNumber(this, 'quizScoreError')"
+        />
+        <div id="quizScoreError" class="error"></div>
+      </div>
+
+      <!-- Laboratory Exercise Scores -->
+      <br />
+      <div id="exerLabel">
+        <label><b>Lab Exercise</b></label
+        ><br />
+        <i>Please enter your lab exer scores.</i>
+      </div>
+
+      <!-- Quizzes -->
+      <br />
+
+      <div id="exerciseContainer"></div>
+      <br />
+
+      <!-- Add Exercise Button -->
+      <button id="addExerBtn" type="button" onclick="addExercise()">
+        Add Exercise
+      </button>
+      <br /><br />
+
+      <!-- Grade Computation -->
+      <p><b>Laboratory Grade Summary</b></p>
+      <div>
+        <label>Quizzes as Exercise: </label>
+        <span id="quizAsExer">0</span>
+      </div>
+      <div>
+        <label>Total Exercise Score: </label>
+        <span id="totalExer">0</span>
+      </div>
+    </div>
+  </body>
+</html>

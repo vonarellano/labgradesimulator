@@ -45,6 +45,7 @@ input {
   border-radius: 5px;
   padding-left: 5px;
   font-size: 15px;
+  accent-color: black;
 }
 
 button {
@@ -70,4 +71,15 @@ button:hover {
   font-size: 15px;
   color: white;
   background: black;
+}
+
+.checkbox-placeholder {
+  display: inline-block;
+  width: 9px; /* Match your checkbox width */
+  height: 16px;
+  margin-right: 8px; /* Match the spacing after the checkbox */
+}
+
+#footer {
+  font-size: 12px;
 }

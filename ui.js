@@ -1,44 +1,137 @@
+/* ==========================================================
+   LAB GRADE SIMULATOR
+   Author: Von Michael B. Arellano
+========================================================== */
+
 let exerciseCount = 0;
 
-// Adds a new input if the user decides to add a new exercise.
-function addExercise() {
-  exerciseCount++;
+/* ==========================================================
+   UI VISIBILITY
+========================================================== */
 
-  const container = document.getElementById("exerciseContainer");
+/**
+ * Shows or hides all elements with the specified class.
+ *
+ * @param {HTMLInputElement} checkbox
+ * @param {string} className
+ * @param {boolean} showWhenChecked
+ */
+function hideOrUnhide(checkbox, className, showWhenChecked = true) {
+  const elements = document.querySelectorAll(`.${className}`);
 
-  const row = document.createElement("div");
-  row.className = "exercise-row";
+  elements.forEach((element) => {
+    element.hidden = showWhenChecked ? !checkbox.checked : checkbox.checked;
+  });
 
-  row.innerHTML = `
-      <label><i>Exer ${exerciseCount}:</i></label>
-      <input
-          type="number"
-          class="exerScores"
-          id="exer${exerciseCount}"
-          placeholder="10"
-          oninput="isNumber(this, 'exer${exerciseCount}Error')"
-      >
-      <button type="button" onclick="removeExercise(this)">
-          <span class="material-symbols-outlined" style="font-size:16px;">
-              delete
-          </span>
-      </button>
-      <div id="exer${exerciseCount}Error" class="error"></div>
-  `;
-
-  container.appendChild(row);
-}
-
-// Function that removes the row of exer
-function removeExercise(button) {
-  const row = button.parentElement;
-  row.remove();
-
-  renumberExercises();
   computeLabScore();
 }
 
-// Renumber the exercises
+/**
+ * Updates the visibility of all quiz-related components.
+ */
+function hideOrUnhideQuiz() {
+  const hasQuiz = document.getElementById("quizzesCheckbox").checked;
+  const quizAsExercise = document.getElementById(
+    "quizzesAsExerCheckbox"
+  ).checked;
+
+  // Show or hide all quiz sections.
+  hideOrUnhide(document.getElementById("quizzesCheckbox"), "quiz");
+
+  toggleElement("quizPercentContainer", hasQuiz && !quizAsExercise);
+  toggleElement("quizExerCheckboxContainer", hasQuiz);
+  toggleElement("quizAsExerComputed", hasQuiz && quizAsExercise);
+  toggleElement("normalizedQuizContainer", hasQuiz && !quizAsExercise);
+
+  computeLabScore();
+}
+
+/**
+ * Shows or hides a single element.
+ *
+ * @param {string} id
+ * @param {boolean} show
+ */
+function toggleElement(id, show) {
+  document.getElementById(id).hidden = !show;
+}
+
+/* ==========================================================
+   EXERCISE MANAGEMENT
+========================================================== */
+
+/**
+ * Adds a new exercise input row.
+ */
+function addExercise() {
+  exerciseCount++;
+
+  const row = createExerciseRow(exerciseCount);
+
+  document.getElementById("exerciseContainer").appendChild(row);
+
+  computeLabScore();
+}
+
+/**
+ * Creates one exercise row.
+ *
+ * @param {number} number
+ * @returns {HTMLDivElement}
+ */
+function createExerciseRow(number) {
+  const row = document.createElement("div");
+
+  row.className = "exercise-row";
+
+  row.innerHTML = `
+    <label><i>Exercise ${number}:</i></label>
+
+    <input
+      id="exer${number}"
+      class="exerScores"
+      type="number"
+      placeholder="10"
+      oninput="isNumber(this,'exer${number}Error')"
+    />
+
+    <button
+      type="button"
+      onclick="removeExercise(this)"
+    >
+      <span
+        class="material-symbols-outlined"
+        style="font-size:16px;"
+      >
+        delete
+      </span>
+    </button>
+
+    <div
+      id="exer${number}Error"
+      class="error"
+    ></div>
+  `;
+
+  return row;
+}
+
+/**
+ * Removes an exercise row.
+ *
+ * @param {HTMLButtonElement} button
+ */
+function removeExercise(button) {
+  button.parentElement.remove();
+
+  renumberExercises();
+
+  computeLabScore();
+}
+
+/**
+ * Renumbers all remaining exercise rows.
+ */
 function renumberExercises() {
   const rows = document.querySelectorAll(".exercise-row");
 
@@ -47,9 +140,38 @@ function renumberExercises() {
   rows.forEach((row, index) => {
     const number = index + 1;
 
-    row.querySelector("label").innerHTML = `<i>Exer ${number}:</i>`;
-
-    const input = row.querySelector("input");
-    input.id = "exer" + number;
+    updateExerciseRow(row, number);
   });
 }
+
+/**
+ * Updates the IDs and labels of an exercise row.
+ *
+ * @param {HTMLDivElement} row
+ * @param {number} number
+ */
+function updateExerciseRow(row, number) {
+  row.querySelector("label").innerHTML = `<i>Exercise ${number}:</i>`;
+
+  const input = row.querySelector(".exerScores");
+
+  input.id = `exer${number}`;
+
+  input.setAttribute("oninput", `isNumber(this,'exer${number}Error')`);
+
+  row.querySelector(".error").id = `exer${number}Error`;
+}
+
+/* ==========================================================
+   INITIALIZATION
+========================================================== */
+
+/**
+ * Initializes the simulator.
+ */
+function initializeUI() {
+  hideOrUnhideQuiz();
+  computeLabScore();
+}
+
+window.addEventListener("DOMContentLoaded", initializeUI);

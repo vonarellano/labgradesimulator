@@ -1,120 +1,261 @@
-<!-- LAB GRADE SIMULATOR -->
-<!-- AUTHOR: Von Michael B. Arellano -->
+<!-- ==========================================================
+     LAB GRADE SIMULATOR
+     Author: Von Michael B. Arellano
+=========================================================== -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>Lab Grade Simulator</title>
-    <script src="main.js"></script>
-    <script src="ui.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Laboratory Grade Simulator</title>
+
+    <!-- Styles -->
     <link rel="stylesheet" href="main.css" />
+    <link rel="icon" href="images/favicon.ico" />
+
+    <!-- Google Material Icons -->
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
     />
+
+    <!-- JavaScript -->
+    <script src="main.js" defer></script>
+    <script src="ui.js" defer></script>
   </head>
+
   <body>
-    <h2 id="title">Laboratory Grade Simulator</h2>
-    <p id="author">Lab Instructor: Von Arellano</p>
-    <div class="container">
-      <!-- Description -->
-      <p id="description">
-        This software simulates the computation of your laboratory grade. Please
-        note that the final laboratory grade may differ from the result shown.
-        For any questions or discrepancies, please consult your laboratory
-        instructor.
-      </p>
-      <!-- Lab Grade Distribution -->
-      <div id="exerLabel">
+    <!-- ======================================================
+         HEADER
+    ======================================================= -->
+    <header>
+      <h2 id="title">Laboratory Grade Simulator</h2>
+      <p id="author">VMBArellano, 2026</p>
+    </header>
+
+    <!-- ======================================================
+         MAIN CONTENT
+    ======================================================= -->
+    <main class="container">
+      <!-- ====================================================
+           DESCRIPTION
+      ===================================================== -->
+      <section>
+        <p id="description">
+          This webpage simulates the computation of your laboratory grade based
+          on your quizzes and laboratory exercise. Please note that the final
+          laboratory grade may differ from the computed result shown. If you
+          have any questions or discrepancies, kindly consult your laboratory
+          instructor.
+        </p>
+      </section>
+
+      <!-- ====================================================
+           GRADE REQUIREMENTS
+      ===================================================== -->
+      <section>
+        <div class="section">
+          <label><b>Laboratory Grade Requirements</b></label
+          ><br />
+          <i>Please check all the requirements that apply.</i>
+        </div>
+
         <br />
-        <label><b>Laboratory Grade Requirements</b></label
-        ><br />
-        <i>Please check all the requirements that applies.</i>
-      </div>
-      <br />
-      <label for="labPercent">Enter Lab Percentage (%): </label>
-      <input
-        id="labPercent"
-        type="number"
-        placeholder="50.0"
-        oninput="isNumber(this, 'labPercentError')"
-      />
-      <div id="labPercentError" class="error"></div>
 
-      <!-- Quizzes Checkbox-->
-      <div>
-        <label for="quizzes">
+        <!-- Quiz -->
+        <div class="requirement">
+          <label for="quizzesCheckbox">
+            <input
+              id="quizzesCheckbox"
+              type="checkbox"
+              onchange="hideOrUnhideQuiz()"
+            />
+            Laboratory Quiz
+          </label>
+        </div>
+
+        <!-- Quiz Percentage -->
+        <div class="quiz" hidden>
+          <div id="quizPercentContainer" hidden>
+            <span class="checkbox-placeholder"></span>
+
+            <label for="quizPercent">
+              <i>Quiz Percentage (%):</i>
+            </label>
+
+            <input
+              id="quizPercent"
+              type="number"
+              placeholder="10.0"
+              oninput="isNumber(this,'quizPercentError')"
+            />
+
+            <div id="quizPercentError" class="error"></div>
+          </div>
+        </div>
+
+        <!-- Quiz as Exercise -->
+        <div id="quizExerCheckboxContainer">
+          <span class="checkbox-placeholder"></span>
+
+          <label for="quizzesAsExerCheckbox">
+            <input
+              id="quizzesAsExerCheckbox"
+              type="checkbox"
+              checked
+              onchange="hideOrUnhideQuiz()"
+            />
+            <i>Count Quiz as One Exercise</i>
+          </label>
+        </div>
+
+        <!-- Exercise -->
+        <div class="requirement">
+          <label for="exerCheckbox">
+            <input
+              id="exerCheckbox"
+              type="checkbox"
+              checked
+              onchange="hideOrUnhide(this,'exers',true)"
+            />
+            Laboratory Exercise
+          </label>
+        </div>
+
+        <div class="exers">
+          <span class="checkbox-placeholder"></span>
+
+          <label for="exerPercent">
+            <i>Exercise Percentage (%):</i>
+          </label>
+
           <input
-            type="checkbox"
-            id="quizzes"
-            onchange="hideOrUnhide(this, 'quiz')"
+            id="exerPercent"
+            type="number"
+            placeholder="30.0"
+            oninput="isNumber(this,'exerPercentError')"
           />
-          Quizzes as Exer
-        </label>
-      </div>
 
-      <!-- Project Checkbox-->
-      <div>
-        <label for="project">
-          <input type="checkbox" id="project" /> Project
-        </label>
-      </div>
+          <div id="exerPercentError" class="error"></div>
+        </div>
+        <br />
+      </section>
 
-      <!-- Lab Exam Checkbox-->
-      <div>
-        <label for="exam"> <input type="checkbox" id="exam" /> Exam </label>
-      </div>
+      <!-- ====================================================
+           QUIZ DETAILS
+      ===================================================== -->
+      <section class="quiz" hidden>
+        <fieldset>
+          <legend><b>Laboratory Quiz</b></legend>
 
-      <div id="quiz" hidden="true">
-        <p><b>Laboratory Quiz</b></p>
-        <!-- Enter Quiz Score -->
-        <label>Enter Perfect Score:</label>
-        <input
-          type="number"
-          id="perfectQuizScore"
-          placeholder="10"
-          oninput="isNumber(this, 'perfectQuizScoreError')"
-        />
-        <div id="perfectQuizScoreError" class="error"></div>
-        <label>Enter Your Quiz Score:</label>
-        <input
-          type="number"
-          id="quizScore"
-          placeholder="10"
-          oninput="isNumber(this, 'quizScoreError')"
-        />
-        <div id="quizScoreError" class="error"></div>
-      </div>
+          <i>Please enter your total score and the perfect score.</i>
 
-      <!-- Laboratory Exercise Scores -->
-      <br />
-      <div id="exerLabel">
-        <label><b>Lab Exercise</b></label
-        ><br />
-        <i>Please enter your lab exer scores.</i>
-      </div>
+          <br /><br />
 
-      <!-- Quizzes -->
-      <br />
+          <label for="perfectQuizScore">Perfect Score:</label>
+          <input
+            id="perfectQuizScore"
+            type="number"
+            placeholder="10"
+            oninput="isNumber(this,'perfectQuizScoreError')"
+          />
+          <div id="perfectQuizScoreError" class="error"></div>
 
-      <div id="exerciseContainer"></div>
-      <br />
+          <label for="quizScore">Your Score:</label>
+          <input
+            id="quizScore"
+            type="number"
+            placeholder="10"
+            oninput="isNumber(this,'quizScoreError')"
+          />
+          <div id="quizScoreError" class="error"></div>
+        </fieldset>
+        <br />
+      </section>
 
-      <!-- Add Exercise Button -->
-      <button id="addExerBtn" type="button" onclick="addExercise()">
-        Add Exercise
-      </button>
-      <br /><br />
+      <!-- ====================================================
+           EXERCISE DETAILS
+      ===================================================== -->
+      <section class="exers">
+        <fieldset>
+          <legend><b>Laboratory Exercises</b></legend>
 
-      <!-- Grade Computation -->
-      <p><b>Laboratory Grade Summary</b></p>
-      <div>
-        <label>Quizzes as Exercise: </label>
-        <span id="quizAsExer">0</span>
-      </div>
-      <div>
-        <label>Total Exercise Score: </label>
-        <span id="totalExer">0</span>
-      </div>
+          <i>Please enter your exercise scores.</i>
+
+          <br /><br />
+
+          <label for="perfectExerScore">Perfect Score:</label>
+          <input
+            id="perfectExerScore"
+            type="number"
+            placeholder="10"
+            oninput="isNumber(this,'perfectExerScoreError')"
+          />
+          <div id="perfectExerScoreError" class="error"></div>
+
+          <br />
+
+          <div id="quizAsExerComputed">
+            <label>Quiz as Exercise (over 10):</label>
+            <span id="quizAsExer">0.00</span>
+          </div>
+
+          <div id="exerciseContainer"></div>
+
+          <br />
+
+          <div>
+            <label>Total Exercise Score:</label>
+            <span id="totalExer">0.00</span>
+          </div>
+
+          <br />
+
+          <button id="addExerBtn" type="button" onclick="addExercise()">
+            Add Exercise
+          </button>
+        </fieldset>
+
+        <br />
+      </section>
+
+      <!-- ====================================================
+           GRADE SUMMARY
+      ===================================================== -->
+      <section>
+        <fieldset>
+          <legend><b>Laboratory Grade Summary</b></legend>
+          <br />
+          <div id="normalizedQuizContainer">
+            <label id="quizPercentResult">Quiz (in __%):</label>
+            <span id="normalizedQuiz">0.00</span>
+          </div>
+
+          <div class="exers">
+            <label id="exerPercentResult">Exercise (in __%):</label>
+            <span id="normalizedExer">0.00</span>
+          </div>
+
+          <br />
+          <div>
+            <label><b>LAB STANDING: </b></label>
+            <b><span id="labStanding">0.00</span></b>
+          </div>
+        </fieldset>
+      </section>
+    </main>
+
+    <br />
+    <br />
+    <div id="footer" class="container">
+      <b>Version 1.1 (July 2026).</b>
+      <i
+        >This simulator currently computes grades based only on laboratory
+        exercises and quizzes administered by the laboratory instructor.</i
+      >
     </div>
+    <br />
+    <br />
   </body>
 </html>

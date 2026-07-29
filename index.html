@@ -138,6 +138,35 @@
 
           <div id="exerPercentError" class="error"></div>
         </div>
+
+        <div class="requirement">
+          <label for="projectCheckbox">
+            <input
+              id="projectCheckbox"
+              type="checkbox"
+              onchange="hideOrUnhideProject()"
+            />
+            Laboratory Project
+          </label>
+        </div>
+
+        <div class="project" hidden>
+          <span class="checkbox-placeholder"></span>
+
+          <label for="projectPercent">
+            <i>Project Percentage (%):</i>
+          </label>
+
+          <input
+            id="projectPercent"
+            type="number"
+            placeholder="20.0"
+            oninput="isNumber(this,'projectPercentError')"
+          /><br />
+
+          <div id="projectPercentError" class="error"></div>
+        </div>
+
         <br />
       </section>
 
@@ -158,6 +187,7 @@
             type="number"
             placeholder="10"
             oninput="isNumber(this,'perfectQuizScoreError')"
+            size="10"
           />
           <div id="perfectQuizScoreError" class="error"></div>
 
@@ -167,6 +197,7 @@
             type="number"
             placeholder="10"
             oninput="isNumber(this,'quizScoreError')"
+            size="10"
           />
           <div id="quizScoreError" class="error"></div>
         </fieldset>
@@ -216,14 +247,36 @@
       <!-- ====================================================
            PROJECT
       ===================================================== -->
-      <section class="project">
+      <section class="project" hidden>
         <fieldset>
           <legend><b>Laboratory Project</b></legend>
 
           <i>Please enter your total score and the perfect score.</i>
 
           <br /><br />
+
+          <label for="perfectProjectScore">Perfect Score:</label>
+          <input
+            id="perfectProjectScore"
+            type="number"
+            placeholder="10"
+            oninput="isNumber(this,'perfectProjectScoreError')"
+            size="10"
+          />
+          <div id="perfectProjectScoreError" class="error"></div>
+
+          <label for="projectScore">Your Score:</label>
+          <input
+            id="projectScore"
+            type="number"
+            placeholder="10"
+            oninput="isNumber(this,'projectScoreError')"
+            size="10"
+          />
+          <div id="projectScoreError" class="error"></div>
+
         </fieldset>
+        <br>
       </section>
 
       <!-- ====================================================

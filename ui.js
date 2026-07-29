@@ -46,6 +46,16 @@ function hideOrUnhideQuiz() {
   computeLabScore();
 }
 
+/** 
+ * Updates the visibility of all project-related components.
+ */
+function hideOrUnhideProject() {
+  const hasProject = document.getElementById("projectCheckbox").checked;
+
+  // Show or hide all project sections
+  hideOrUnhide(document.getElementById("projectCheckbox"), "project");
+}
+
 /**
  * Shows or hides a single element.
  *

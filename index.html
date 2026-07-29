@@ -180,20 +180,9 @@
         <fieldset>
           <legend><b>Laboratory Exercises</b></legend>
 
-          <i>Please enter your exercise scores.</i>
+          <i>Please enter your exercise scores along with its perfect scores.</i>
 
           <br /><br />
-
-          <label for="perfectExerScore">Perfect Score:</label>
-          <input
-            id="perfectExerScore"
-            type="number"
-            placeholder="10"
-            oninput="isNumber(this,'perfectExerScoreError')"
-          />
-          <div id="perfectExerScoreError" class="error"></div>
-
-          <br />
 
           <div id="quizAsExerComputed">
             <label>Quiz as Exercise (over 10):</label>
@@ -209,6 +198,11 @@
             <span id="totalExer">0.00</span>
           </div>
 
+          <div>
+            <label>Total Pefect Score:</label>
+            <span id="totalPerfectExer">0.00</span>
+          </div>
+
           <br />
 
           <button id="addExerBtn" type="button" onclick="addExercise()">
@@ -217,6 +211,19 @@
         </fieldset>
 
         <br />
+      </section>
+
+      <!-- ====================================================
+           PROJECT
+      ===================================================== -->
+      <section class="project">
+        <fieldset>
+          <legend><b>Laboratory Project</b></legend>
+
+          <i>Please enter your total score and the perfect score.</i>
+
+          <br /><br />
+        </fieldset>
       </section>
 
       <!-- ====================================================
@@ -243,6 +250,7 @@
           </div>
         </fieldset>
       </section>
+
     </main>
 
     <br />

@@ -85,13 +85,25 @@ function createExerciseRow(number) {
   row.className = "exercise-row";
 
   row.innerHTML = `
-    <label><i>Exer ${number}:</i></label>
+    <label><i>Exercise ${number}:</i></label>
 
     <input
       id="exer${number}"
       class="exerScores"
       type="number"
       placeholder="10"
+      size="3"
+      oninput="isNumber(this,'exer${number}Error')"
+    />
+
+    /
+
+    <input
+      id="perfectExer${number}"
+      class="perfectExerScores"
+      type="number"
+      placeholder="10"
+      size="3"
       oninput="isNumber(this,'exer${number}Error')"
     />
 

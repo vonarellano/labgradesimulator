@@ -36,11 +36,14 @@ function getInputs() {
 
     // Exercise
     exerPercent: getNumber("exerPercent"),
-    perfectExer: getNumber("perfectExerScore"),
 
     exerciseScores: [...document.querySelectorAll(".exerScores")].map(
       (input) => Number(input.value) || 0
     ),
+
+    perfectExerScores: [...document.querySelectorAll(".perfectExerScores")].map(
+      (input) => Number(input.value) || 0
+    )
   };
 }
 
@@ -82,7 +85,11 @@ function calculateLabGrade(data) {
     0
   );
 
-  let perfectExercise = data.perfectExer;
+  let perfectExercise = data.perfectExerScores.reduce(
+    (sum, score) => sum + score,
+    0
+  );
+
   let quizEquivalent = 0;
 
   // Count quiz as an exercise
@@ -113,6 +120,7 @@ function calculateLabGrade(data) {
   return {
     quizEquivalent,
     totalExercise,
+    perfectExercise,
     normalizedExercise,
     normalizedQuiz,
     labStanding,
@@ -135,6 +143,9 @@ function displayResults(data, result) {
 
   document.getElementById("totalExer").innerText =
     result.totalExercise.toFixed(2);
+
+  document.getElementById("totalPerfectExer").innerText = 
+    result.perfectExercise.toFixed(2);
 
   document.getElementById("normalizedQuiz").innerText =
     result.normalizedQuiz.toFixed(2);
